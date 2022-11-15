@@ -1,6 +1,6 @@
-ipipeline {
+pipeline {
     environment {
-        registry = "MaciejDubowik/jenkins-docker-test"
+        registry = "rigir/jenkins-docker-test"
         DOCKERHUB_CREDENTIALS = credentials('docker-login-pwd')
     }
     agent {
@@ -28,7 +28,7 @@ ipipeline {
         stage("Build & Push Docker image") {
             steps {
                 sh 'docker image build -t $registry:$BUILD_NUMBER .'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u mmiotkug --password-stdin'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u rigir --password-stdin'
                 sh 'docker image push $registry:$BUILD_NUMBER'
                 sh "docker image rm $registry:$BUILD_NUMBER"
             }
@@ -44,5 +44,5 @@ ipipeline {
                 sh './jenkins/scripts/cleanup.sh'
             }
         }
+    }
 }
-
